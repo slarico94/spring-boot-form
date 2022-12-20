@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title th:text="${titulo}"></title>
+	<meta charset="UTF-8" />
+	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+</head>
+
+<body class="container">
+	<a th:href="@{/form}" class="btn btn-success my-3">Volver</a>
+	<h3 th:text="${titulo}"></h3>
+	<ul class="list-group">
+		<li class="list-group-item">Pais: <span th:text="${user.pais.nombre}"></span></li>
+		<li class="list-group-item">Sexo: <span th:text="${user.sexo}"></span></li>
+		<li class="list-group-item">Identificador: <span th:text="${user.idUsuario}"></span></li>
+		<li class="list-group-item">Nombre: <span th:text="${user.nombre}"></span></li>
+		<li class="list-group-item">Apellido: <span th:text="${user.apellido}"></span></li>
+		<li class="list-group-item">Usuario: <span th:text="${user.username}"></span></li>
+		<li class="list-group-item">Contraseña: <span th:text="${user.password}"></span></li>
+		<li class="list-group-item">Correo: <span th:text="${user.email}"></span></li>
+		<li class="list-group-item">Cuenta: <span th:text="${user.cuenta}"></span></li>
+		<li class="list-group-item">Fecha Nacimiento: <span th:text="${#dates.format(user.fechaNacimiento, 'dd/MM/yyyy')}"></span></li>
+		<li class="list-group-item">Fecha Nacimiento: <span th:text="${#calendars.format(user.fechaNacimiento, 'dd-MM-yyyy')}"></span></li>
+		<li class="list-group-item">Habilitado: <span th:text="${user.habilitar}"></span></li>
+		<li class="list-group-item">Valor Secreto: <span th:text="${user.valorSecreto}"></span></li>
+	</ul>
+
+	<h3>Roles</h3>
+	<ul class="list-group">
+		<li class="list-group-item" th:each="role : ${user.roles}" th:text="${role.role} + '-' + ${role.nombre}"></li>
+	</ul>
+</body>
+
+</html>
