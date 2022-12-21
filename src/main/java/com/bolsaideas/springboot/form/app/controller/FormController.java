@@ -162,5 +162,11 @@ public class FormController {
 	public List<String> sexo() {
 		return List.of("Masculino", "Femenino");
 	}
+	
+	@GetMapping("/cerrado")
+	public String cerrado(Model model) {
+		model.addAttribute("titulo", "Fuera de horario");
+		return "fuera_horario";
+	}
 
 }
