@@ -10,6 +10,8 @@
 <body>
 
 	<div class="container">
+		<section th:insert="~{componentes/tiempo :: interceptor}"></section>
+
 		<h2 th:text="${titulo}"></h2>
 		<form th:action="@{/form}" th:object="${user}" method="post" autocomplete="off">
 			<div class="form-check">
