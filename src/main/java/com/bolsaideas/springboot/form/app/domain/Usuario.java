@@ -59,5 +59,7 @@ public class Usuario {
 	private String sexo;
 	
 	private String valorSecreto;
+	
+	
 
 }

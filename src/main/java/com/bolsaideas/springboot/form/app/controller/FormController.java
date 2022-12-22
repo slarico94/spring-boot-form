@@ -15,6 +15,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -27,8 +28,10 @@ import com.bolsaideas.springboot.form.app.domain.validation.UsuarioValidator;
 import com.bolsaideas.springboot.form.app.editors.NombreMayusculaEditor;
 import com.bolsaideas.springboot.form.app.editors.PaisPropertyEditor;
 import com.bolsaideas.springboot.form.app.editors.RolePropertyEditor;
+import com.bolsaideas.springboot.form.app.exception.UsuarioNoEncontradoException;
 import com.bolsaideas.springboot.form.app.service.PaisService;
 import com.bolsaideas.springboot.form.app.service.RoleService;
+import com.bolsaideas.springboot.form.app.service.UsuarioService;
 
 import jakarta.validation.Valid;
 
@@ -50,6 +53,9 @@ public class FormController {
 
 	@Autowired
 	private RolePropertyEditor rolePropertyEditor;
+	
+	@Autowired
+	private UsuarioService usuarioService;
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -102,6 +108,7 @@ public class FormController {
 			model.addAttribute("titulo", "Resultado form");
 			return "form";
 		}
+		usuarioService.guardarUsuario(usuario);
 		return "redirect:/ver";
 	}
 
@@ -115,6 +122,19 @@ public class FormController {
 		}
 		model.addAttribute("titulo", "Resultado form");
 		status.setComplete();
+		return "resultado";
+	}
+	
+	@GetMapping("/ver/{id}")
+	public String verUsuario(
+			@PathVariable("id") String idUsuario,
+			Model model) {
+		Usuario usuario = usuarioService.obtenerUsuarioPorId(idUsuario);
+		/*if (usuario == null) {
+			throw new UsuarioNoEncontradoException(idUsuario);
+		}*/
+		model.addAttribute("titulo", "Resultado form");
+		model.addAttribute("user", usuario);
 		return "resultado";
 	}
 
@@ -167,6 +187,14 @@ public class FormController {
 	public String cerrado(Model model) {
 		model.addAttribute("titulo", "Fuera de horario");
 		return "fuera_horario";
+	}
+	
+	@GetMapping("/test")
+	public String test(Model model) {
+		model.addAttribute("titulo", "Fuera de horario");
+		//Integer value = 100 / 0;
+		Integer value = Integer.parseInt("10x");
+		return "test";
 	}
 
 }
